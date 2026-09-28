@@ -60,28 +60,43 @@ public class LemonadeStand{
 	 */
 	public void buySupplies(){
 		System.out.println("Prices - lemons $" + costLemons + " sugar $" + costSugar + " ice $" + costIce);
-		
+
 		System.out.print("How many lemons do you want to buy? ");
 		int l = scan.nextInt();
+
 		System.out.print("How many sugar do you want to buy? ");
 		int s = scan.nextInt();
+
 		System.out.print("How many ice do you want to buy? ");
 		int i = scan.nextInt();
 		scan.nextLine();
-		
-		// Total Cost, checks if user has enough
-		double total = l * costLemons + s * costSugar + i * costIce;
-		if(total > cashOnHand){
-			System.out.println("You don't have enough money for that! You need $" + String.format("%.2f", total));
+
+		// Make sure the player isn't buying negative amounts (thanks dad)
+		if(l < 0 || s < 0 || i < 0){
+			System.out.println("You can't buy negative supplies!");
 			return;
 		}
-		
-		cashOnHand = cashOnHand - total;
-		qtyLemons = qtyLemons + l;
-		qtySugar = qtySugar + s;
-		qtyIce = qtyIce + i;
+
+		// Calculate total cost
+		double total = l * costLemons + s * costSugar + i * costIce;
+
+		// Check if player has enough money
+		if(total > cashOnHand){
+			System.out.println("You don't have enough money for that!");
+			System.out.println("Cost: $" + String.format("%.2f", total));
+			System.out.println("Cash: $" + String.format("%.2f", cashOnHand));
+			return;
+		}
+
+		// Complete purchase
+		cashOnHand -= total;
+		qtyLemons += l;
+		qtySugar += s;
+		qtyIce += i;
+
 		System.out.println("Bought it! You spent $" + String.format("%.2f", total));
 	}
+
 	/**
 	 * Prompts user to create recipe
 	 */
@@ -148,6 +163,11 @@ public class LemonadeStand{
 			System.out.println("You sold out! Missed " + (demand - cupsAvailable) + " customers.");
 		}
 	}
+
+	public void randomEvents(){
+		// Random events can be implemented here in the future
+	}
+
 	public void play(){
 		while(day <= totalDays){
 		boolean opened = false;
