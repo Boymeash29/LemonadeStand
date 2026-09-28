@@ -8,7 +8,7 @@
 import java.util.Scanner;
 
 /**
- * Methods: setup(money), showStatus, buySupplies, setRecipe
+ * Controls ALL methods for lemonade stand
  */
 public class LemonadeStand{
 	
@@ -302,7 +302,13 @@ public class LemonadeStand{
 						System.out.println("Not a real option, try again.");
 					}
 				}
-
+				try {
+					Thread.sleep(3000);
+				} catch (InterruptedException e) {
+					Thread.currentThread().interrupt();
+				}
+				System.out.print("\033[H\033[2J");
+				System.out.flush();
 				day++;
 			}
 
